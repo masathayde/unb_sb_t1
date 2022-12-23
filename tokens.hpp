@@ -39,7 +39,7 @@ vector<string> createTokensFromLine (string input) {
             if (c == ' ' || c == '\t') {
                 output.push_back(token);
                 readingToken = false;
-            } else if (c == ':' || c == '+') {
+            } else if (c == ':' || c == '+' || c == ',') {
                 if (token != "") {
                     output.push_back(token);
                 }
@@ -78,14 +78,25 @@ vector<TokenLine> tokenizeProgram (char* filename) {
         lineCounter++;
         getline(file, lineRead);
         vector<string> tokens = createTokensFromLine(lineRead);
-        TokenLine tokenLine;
-        tokenLine.lineNumber = lineCounter;
-        tokenLine.originalText = lineRead;
-        tokenLine.tokens = tokens;
-        output.push_back(tokenLine);
+        if (!tokens.empty()) {
+            TokenLine tokenLine;
+            tokenLine.lineNumber = lineCounter;
+            tokenLine.originalText = lineRead;
+            tokenLine.tokens = tokens;
+            output.push_back(tokenLine);
+        }
     }
     file.close();
     return output;
+}
+
+
+// Symbol table stuff
+#include <map>
+map<string,int> createSymbolTable (vector<TokenLine>& tokenLines, int mode) {
+
+
+
 }
 
 

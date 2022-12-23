@@ -6,6 +6,7 @@
 
 #include "common.hpp"
 #include "tokens.hpp"
+#include "error.hpp"
 
 using namespace std;
 
@@ -18,21 +19,6 @@ int main (int argc, char* argv[]) {
     // toUpperCase(test);
     // cout << test << endl;
 
-    // ifstream file;
-    // file.open("fatoriamacro.asm");
-    // char c;
-    // string s;
-    // while(!file.eof()) {
-    //     getline(file, s);
-    //     cout << s << endl;
-    //     vector<string> test = createTokensFromLine(s, 1);
-    //     cout << "tokens: ";
-    //     for (int i = 0; i < test.size(); ++i) {
-    //         cout << test[i] << ' ';
-    //     }
-    //     cout << endl;
-    // }
-
     vector<TokenLine> tokenizedProgram = tokenizeProgram((char*)"fatoriamacro.asm");
     for (int i = 0; i < tokenizedProgram.size(); ++i) {
         cout << "Line " << tokenizedProgram[i].lineNumber << ": " << " tokens: ";
@@ -42,7 +28,10 @@ int main (int argc, char* argv[]) {
         cout << endl;
     }
 
+    vector<string> errors = checkLexicalErrors(tokenizedProgram);
 
+    for (auto it : errors)
+        cout << it << endl;
 
 
     return 0;
