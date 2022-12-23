@@ -1,18 +1,22 @@
+#ifndef TOKENS_H_
+#define TOKENS_H_
+
 #include <sstream>
+#include <fstream>
 #include "common.hpp"
-#include "classes.hpp"
+// #include "classes.hpp"
 
 using namespace std;
 
 class TokenLine {
  public:
     vector<string> tokens;
+    string originalText;
     int lineNumber;
-
 };
 
 
-vector<string> createTokensFromLine (string input, int line_number) {
+vector<string> createTokensFromLine (string input) {
     vector<string> output;
     stringstream stream(input);
     char c = ' ';
@@ -32,15 +36,7 @@ vector<string> createTokensFromLine (string input, int line_number) {
         bool readingToken = true;
         while (readingToken && !stream.eof()) {
             stream.get(c);
-            if ((c >= ASCII_UPPERCASE_START && c <= ASCII_UPPERCASE_START + ALPHABET_SIZE) || (c >= '0' && c <= '9') || c == '_') {
-                // Valid character.
-                if (stream.eof()) {
-                    output.push_back(token);
-                    readingToken = false;
-                } else {
-                    token = token + c;
-                }
-            } else if (c == ' ' || c == '\t') {
+            if (c == ' ' || c == '\t') {
                 output.push_back(token);
                 readingToken = false;
             } else if (c == ':' || c == '+') {
@@ -57,9 +53,12 @@ vector<string> createTokensFromLine (string input, int line_number) {
                 }
                 return output;
             } else {
-                // Invalid character.
-                // Throw error?
-                throw runtime_error((string)"Linha " + to_string(line_number) + ": Erro lexico: carater nao permitido: " + c);
+                if (stream.eof()) {
+                    output.push_back(token);
+                    readingToken = false;
+                } else {
+                    token = token + c;
+                }
             }
         }
     }
@@ -69,7 +68,35 @@ vector<string> createTokensFromLine (string input, int line_number) {
     return output;
 }
 
-TokenLine tokenizeProgram () {
-
-
+vector<TokenLine> tokenizeProgram (char* filename) {
+    ifstream file;
+    file.open(filename);
+    string lineRead;
+    vector<TokenLine> output;
+    int lineCounter = 0;
+    while(!file.eof()) {
+        lineCounter++;
+        getline(file, lineRead);
+        vector<string> tokens = createTokensFromLine(lineRead);
+        TokenLine tokenLine;
+        tokenLine.lineNumber = lineCounter;
+        tokenLine.originalText = lineRead;
+        tokenLine.tokens = tokens;
+        output.push_back(tokenLine);
+    }
+    file.close();
+    return output;
 }
+
+
+// if ((c >= ASCII_UPPERCASE_START && c <= ASCII_UPPERCASE_START + ALPHABET_SIZE) || (c >= '0' && c <= '9') || c == '_') {
+//                 // Valid character.
+//                 if (stream.eof()) {
+//                     output.push_back(token);
+//                     readingToken = false;
+//                 } else {
+//                     token = token + c;
+//                 }
+//             } else 
+
+#endif

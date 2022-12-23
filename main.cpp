@@ -18,19 +18,26 @@ int main (int argc, char* argv[]) {
     // toUpperCase(test);
     // cout << test << endl;
 
-    ifstream file;
-    file.open("fatoriamacro.asm");
-    char c;
-    string s;
-    //file.seekg(-1);
-    //file.get(c);
-    while(!file.eof()) {
-        getline(file, s);
-        cout << s << endl;
-        vector<string> test = createTokensFromLine(s, 1);
-        cout << "tokens: ";
-        for (int i = 0; i < test.size(); ++i) {
-            cout << test[i] << ' ';
+    // ifstream file;
+    // file.open("fatoriamacro.asm");
+    // char c;
+    // string s;
+    // while(!file.eof()) {
+    //     getline(file, s);
+    //     cout << s << endl;
+    //     vector<string> test = createTokensFromLine(s, 1);
+    //     cout << "tokens: ";
+    //     for (int i = 0; i < test.size(); ++i) {
+    //         cout << test[i] << ' ';
+    //     }
+    //     cout << endl;
+    // }
+
+    vector<TokenLine> tokenizedProgram = tokenizeProgram((char*)"fatoriamacro.asm");
+    for (int i = 0; i < tokenizedProgram.size(); ++i) {
+        cout << "Line " << tokenizedProgram[i].lineNumber << ": " << " tokens: ";
+        for (int j = 0; j < tokenizedProgram[i].tokens.size(); ++j) {
+            cout << tokenizedProgram[i].tokens[j] << ' ';
         }
         cout << endl;
     }
