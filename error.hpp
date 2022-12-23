@@ -19,7 +19,16 @@ using namespace std;
 **/
 
 bool isProperlyFormattedNumber (string token) {
-    for (int i = 0; i < token.size(); ++i) {
+    int i = 0;
+    // Hexadecimal number.
+    if (token.size() > 2 && token[0] == '0' && (token[1] == 'X' || token[1] == 'x') ) {
+        i = 2;
+    }
+    // Negative number.
+    if (token.size() > 1 && token[0] == '-') {
+        i = 1;
+    }
+    for (; i < token.size(); ++i) {
         if (token[i] < '0' || token[i] > '9')
            return false; 
     }
@@ -42,7 +51,7 @@ vector<string> checkLexicalErrors (vector<TokenLine>& tokenLines) {
         for (int j = 0; j < tokenLines[i].tokens.size(); ++j) {
             string token = tokenLines[i].tokens[j];
             // Number.
-            if (token[0] >= '0' && token[0] <= '9') {
+            if ((token[0] >= '0' && token[0] <= '9') || token[0] == '-') {
                 if (!isProperlyFormattedNumber(token)) {
                     string error = "Linha " + to_string(tokenLines[i].lineNumber) + ": Erro lexico: numero inical em rotulo: " + token;
                     output.push_back(error);

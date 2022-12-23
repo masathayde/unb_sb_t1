@@ -1,4 +1,6 @@
 *.exe
 *.asm
 *.obj*
+*.PRE
+*.MCR
 .vscode

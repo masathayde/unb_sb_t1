@@ -13,7 +13,23 @@ class TokenLine {
     vector<string> tokens;
     string originalText;
     int lineNumber;
+    bool ignore {false};
 };
+
+string getStringFromTokenLine (TokenLine tokenLine) {
+    string output = "";
+    string token = "";
+    string prevToken = "";
+    for (int i = 0; i < tokenLine.tokens.size(); ++i) {
+        string token = tokenLine.tokens[i];
+        if (i != 0 && token != ":" && token != "+" && token != "," && prevToken != "+") {
+            output = output + " ";
+        }
+        output = output + token;
+        prevToken = token;
+    }
+    return output;
+}
 
 
 vector<string> createTokensFromLine (string input) {

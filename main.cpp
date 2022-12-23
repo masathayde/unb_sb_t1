@@ -7,6 +7,8 @@
 #include "common.hpp"
 #include "tokens.hpp"
 #include "error.hpp"
+#include "print.hpp"
+#include "preprocessing.hpp"
 
 using namespace std;
 
@@ -15,7 +17,7 @@ using namespace std;
 
 int main (int argc, char* argv[]) {
 
-    // string test = "llol";
+    // string test = "llol losaaf+sfd,cxASKf;;// issaf";
     // toUpperCase(test);
     // cout << test << endl;
 
@@ -29,11 +31,15 @@ int main (int argc, char* argv[]) {
     }
 
     vector<string> errors = checkLexicalErrors(tokenizedProgram);
-
     for (auto it : errors)
         cout << it << endl;
 
+    // int test = stoi("0X10", NULL, 0);
+    // cout << test << endl;
 
+    preprocessEQUandIF(tokenizedProgram);
+    printProgram(tokenizedProgram);
+    saveProgramToFile(tokenizedProgram, "fatoriamacro.PRE");
     return 0;
 
 }
