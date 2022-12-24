@@ -30,16 +30,17 @@ int main (int argc, char* argv[]) {
         cout << endl;
     }
 
-    vector<string> errors = checkLexicalErrors(tokenizedProgram);
-    for (auto it : errors)
-        cout << it << endl;
+    // vector<string> errors = checkLexicalErrors(tokenizedProgram);
+    // for (auto it : errors)
+    //     cout << it << endl;
 
     // int test = stoi("0X10", NULL, 0);
     // cout << test << endl;
 
     preprocessEQUandIF(tokenizedProgram);
-    printProgram(tokenizedProgram);
-    saveProgramToFile(tokenizedProgram, "fatoriamacro.PRE");
+    vector<TokenLine> programAfterMacro = preprocessMacro(tokenizedProgram);
+    printProgram(programAfterMacro);
+    // saveProgramToFile(programAfterMacro, "fatoriamacro.PRE");
     return 0;
 
 }
