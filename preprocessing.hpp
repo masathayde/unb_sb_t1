@@ -67,6 +67,7 @@ vector<TokenLine> preprocessMacro (vector<TokenLine>& tokenLines) {
 
 // Recursive function to expand a macro that might itself contain a macro.
 // Does NOT deal with infinite loops, assumes a macro will not call itself.
+// Make sure not to change macroTable.
 vector<TokenLine> expandMacro (TokenLine& tokenLine, unordered_map<string, MacroDef>& macroTable) {
     vector<TokenLine> output;
     if (tokenLine.ignore == false) {
@@ -74,6 +75,7 @@ vector<TokenLine> expandMacro (TokenLine& tokenLine, unordered_map<string, Macro
         unordered_map<string, MacroDef>::iterator macroDef = macroTable.find(token);
         if (macroDef != macroTable.end()) {
             unordered_map<string,string> aliasMap;
+            // Assuming all the tokens are in the correct position here. No error checking at all.
             for (int i = 0; i < macroDef->second.arguments.size(); ++i) {
                 aliasMap.insert(make_pair(macroDef->second.arguments[i], tokenLine.tokens[i*2+1]));
             }
@@ -94,6 +96,7 @@ vector<TokenLine> expandMacro (TokenLine& tokenLine, unordered_map<string, Macro
                 }
             }
         } else {
+            // Stop condition - base case.
             output.push_back(tokenLine);
         }
     }

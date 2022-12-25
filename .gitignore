@@ -3,4 +3,5 @@
 *.obj*
 *.PRE
 *.MCR
+*.zip
 .vscode

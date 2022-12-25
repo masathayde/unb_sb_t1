@@ -93,6 +93,7 @@ vector<TokenLine> tokenizeProgram (char* filename) {
     while(!file.eof()) {
         lineCounter++;
         getline(file, lineRead);
+        toUpperCase(lineRead); // Converts lowercase to uppercase. VERY important.
         vector<string> tokens = createTokensFromLine(lineRead);
         if (!tokens.empty()) {
             TokenLine tokenLine;

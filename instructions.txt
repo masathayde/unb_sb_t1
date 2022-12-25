@@ -1,0 +1,5 @@
+; Format:
+; NAME #_of_arguments code
+; All arguments must start with labels. No numbers or other symbols.
+; They can be single labels or a label followed by '+', followed by a number.
+; Arguments are separated by a comma.

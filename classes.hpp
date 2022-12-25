@@ -7,44 +7,50 @@ using namespace std;
 class SymbolTable {};
 
 
-class Instruction {
-
-
-
+class Argument {
  public:
     string name;
-    int code;
-    int line;
-    vector<string> arguments;
-    
-    virtual string convertToText ();
-    string convertToMachineCode (SymbolTable table);
-
+    int modifier {0};
 };
 
-string Instruction::convertToText() {
+class InstructionDef {
+ public:
+    string name {""};
+    int argumentCount;
+    int code;
+};
 
-    string output = name;
-    if (arguments.size() > 0) {
-        output = output + " " + arguments[0];
-        if (arguments.size() > 1) {
-            output = output + "," + arguments[1];
-        }
-    }
-    return output;
-}
+class Instruction {
+ public:
+    InstructionDef definition;
+    int line {0};
+    vector<Argument> arguments;
+};
 
-string Instruction::convertToMachineCode(SymbolTable table) {
+// string Instruction::convertToText() {
 
-    string output = to_string(code);
-    int address = 0;
-    if (arguments.size() > 0) {
-        int address = table.getAddress(arguments[0]);
-        output = output + " " + to_string(address);
-        if (arguments.size() > 1) {
-            int address = table.getAddress(arguments[1]);
-            output = output + " " + to_string(address);
-        }   
-    }
-    return output;
-} 
+//     string output = name;
+//     if (arguments.size() > 0) {
+//         output = output + " " + arguments[0];
+//         if (arguments.size() > 1) {
+//             output = output + "," + arguments[1];
+//         }
+//     }
+//     return output;
+// }
+
+// string Instruction::convertToMachineCode(SymbolTable table) {
+
+//     string output = to_string(code);
+//     int address = 0;
+//     if (arguments.size() > 0) {
+//         int address = table.getAddress(arguments[0]);
+//         output = output + " " + to_string(address);
+//         if (arguments.size() > 1) {
+//             int address = table.getAddress(arguments[1]);
+//             output = output + " " + to_string(address);
+//         }   
+//     }
+//     return output;
+// } 
+
