@@ -107,11 +107,10 @@ vector<TokenLine> expandMacro (TokenLine& tokenLine, unordered_map<string, Macro
 // EQUs are all before SECTION TEXT.
 // Assumes there's no errors.
 void preprocessEQUandIF (vector<TokenLine>& tokenLines) {
-
     unordered_map<string, string> equTable;
     int i = 0;
-    for (string line = ""; line != "SECTION TEXT"; line = tokenLines[i].originalText) {
-        string alias = tokenLines[i].tokens[2];
+    for (string line = tokenLines[i].originalText; line != "SECTION TEXT"; line = tokenLines[i].originalText) {
+        string alias = tokenLines[i].tokens[0];
         string value = tokenLines[i].tokens[3];
         equTable.insert(make_pair(alias, value));
         tokenLines[i].ignore = true;

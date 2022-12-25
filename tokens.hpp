@@ -109,12 +109,12 @@ vector<TokenLine> tokenizeProgram (char* filename) {
 
 
 // Symbol table stuff
-#include <map>
-map<string,int> createSymbolTable (vector<TokenLine>& tokenLines, int mode) {
+// #include <map>
+// map<string,int> createSymbolTable (vector<TokenLine>& tokenLines, int mode) {
 
 
 
-}
+// }
 
 
 // if ((c >= ASCII_UPPERCASE_START && c <= ASCII_UPPERCASE_START + ALPHABET_SIZE) || (c >= '0' && c <= '9') || c == '_') {

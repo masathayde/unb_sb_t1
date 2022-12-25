@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "common.hpp"
+#include "classes.hpp"
 #include "tokens.hpp"
 #include "error.hpp"
 #include "print.hpp"
@@ -17,11 +18,16 @@ using namespace std;
 
 int main (int argc, char* argv[]) {
 
-    // string test = "llol losaaf+sfd,cxASKf;;// issaf";
-    // toUpperCase(test);
-    // cout << test << endl;
-
     vector<TokenLine> tokenizedProgram = tokenizeProgram((char*)"fatoriamacro.asm");
+    // for (int i = 0; i < tokenizedProgram.size(); ++i) {
+    //     cout << "Line " << tokenizedProgram[i].lineNumber << ": " << " tokens: ";
+    //     for (int j = 0; j < tokenizedProgram[i].tokens.size(); ++j) {
+    //         cout << tokenizedProgram[i].tokens[j] << ' ';
+    //     }
+    //     cout << endl;
+    // }
+
+    preprocessEQUandIF(tokenizedProgram);
     for (int i = 0; i < tokenizedProgram.size(); ++i) {
         cout << "Line " << tokenizedProgram[i].lineNumber << ": " << " tokens: ";
         for (int j = 0; j < tokenizedProgram[i].tokens.size(); ++j) {
@@ -29,18 +35,33 @@ int main (int argc, char* argv[]) {
         }
         cout << endl;
     }
-
-    // vector<string> errors = checkLexicalErrors(tokenizedProgram);
-    // for (auto it : errors)
-    //     cout << it << endl;
-
-    // int test = stoi("0X10", NULL, 0);
-    // cout << test << endl;
-
-    preprocessEQUandIF(tokenizedProgram);
     vector<TokenLine> programAfterMacro = preprocessMacro(tokenizedProgram);
-    printProgram(programAfterMacro);
+
+
+
+    vector<string> lexErrors = checkLexicalErrors(programAfterMacro);
+    for (auto it : lexErrors)
+        cout << it << endl;
+
+    unordered_map<string, InstructionDef> insDefTable = makeInstructionDefTable();
+    vector<Instruction> instList;
+    vector<DataDirective> dataList;
+    unordered_map<string,int> symbolTable;
+    vector<string> synErrors = checkSyntaxMakeInstructionListMakeSymbolTable(programAfterMacro, insDefTable, instList, dataList, symbolTable);
+    for (auto it : synErrors)
+        cout << it << endl;
+    
+    vector<string> semErrors = checkForSemanticErrors(instList, symbolTable);
+    for (auto it : semErrors)
+        cout << it << endl;
+
+    if (lexErrors.size() + synErrors.size() + semErrors.size() == 0) {
+        cout << translate(instList, dataList, symbolTable) << endl;
+    }
+
+    //printProgram(programAfterMacro);
     // saveProgramToFile(programAfterMacro, "fatoriamacro.PRE");
+
     return 0;
 
 }

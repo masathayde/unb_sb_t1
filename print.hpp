@@ -8,9 +8,8 @@
 void printProgram (vector<TokenLine> tokenLines) {
 
     for (int i = 0; i < tokenLines.size(); ++i) {
-        string line = getStringFromTokenLine(tokenLines[i]);
         if (tokenLines[i].ignore == false) {
-            cout << line << endl;
+            cout << getStringFromTokenLine(tokenLines[i]) << endl;
         }
     }
 }
