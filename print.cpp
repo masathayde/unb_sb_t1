@@ -12,7 +12,7 @@ void printProgram (vector<TokenLine> tokenLines) {
 void saveProgramToFile (vector<TokenLine> tokenLines, string filename) {
 
     ofstream file;
-    file.open(filename.c_str());
+    file.open(filename);
     for (int i = 0; i < tokenLines.size(); ++i) {
         string line = getStringFromTokenLine(tokenLines[i]);
         if (tokenLines[i].ignore == false) {

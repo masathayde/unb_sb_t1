@@ -30,7 +30,7 @@ string translate (vector<Instruction>& instList, vector<DataDirective>& dataList
     for (auto instruction : instList) {
         output = output + to_string(instruction.definition.code) + " ";
         for (auto arg : instruction.arguments) {
-            unordered_map<string,int>::iterator it =  symbolTable.find(arg.name);
+            unordered_map<string,int>::iterator it = symbolTable.find(arg.name);
             int value = it->second + arg.modifier;
             output = output + to_string(value) + " ";
         }

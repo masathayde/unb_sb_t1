@@ -17,7 +17,7 @@ endif
 all: main clean
 
 main: main.cpp common.o classes.o error.o preprocessing.o print.o tokens.o
-	$(CXX) $(CXXFLAGS) -o main.exe main.cpp common.o classes.o error.o preprocessing.o print.o tokens.o
+	$(CXX) $(CXXFLAGS) -o MONTADOR.exe main.cpp common.o classes.o error.o preprocessing.o print.o tokens.o
 
 classes.o: classes.hpp classes.cpp
 	$(CXX) $(CXXFLAGS) -c classes.cpp

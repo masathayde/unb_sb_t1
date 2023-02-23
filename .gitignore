@@ -4,4 +4,6 @@
 *.PRE
 *.MCR
 *.zip
+simulador
 .vscode
+*.o

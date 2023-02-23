@@ -217,11 +217,13 @@ unordered_map<string,int>& _symbolTable) {
     // Check if text section is empty, in which case SECTION DATA is the second line.
     int i = 1;
     int address = 0; // Address of the instruction.
-    if (tokenLines[i].originalText == "SECTION DATA") {
+    // if (tokenLines[i].originalText == "SECTION DATA") {
+    if (tokenLines[i].tokens[0] == "SECTION" && tokenLines[i].tokens[1] == "DATA") {
         string error = "Linha "  + to_string(tokenLines[i].lineNumber) + ": Erro sintatico: secao TEXT faltante";
         output.push_back(error);
     } else {
-        for (string line = tokenLines[i].originalText; line != "SECTION DATA"; ++i, line = tokenLines[i].originalText) {
+        // for (string line = tokenLines[i].originalText; line != "SECTION DATA"; ++i, line = tokenLines[i].originalText) {
+        for (; !(tokenLines[i].tokens[0] == "SECTION" && tokenLines[i].tokens[1] == "DATA"); ++i) {
             if (tokenLines[i].ignore == false) {
                 string label = "";
                 Instruction newInstruction;

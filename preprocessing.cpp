@@ -96,12 +96,13 @@ vector<TokenLine> expandMacro (TokenLine& tokenLine, unordered_map<string, Macro
 void preprocessEQUandIF (vector<TokenLine>& tokenLines) {
     unordered_map<string, string> equTable;
     int i = 0;
-    for (string line = tokenLines[i].originalText; line != "SECTION TEXT"; line = tokenLines[i].originalText) {
+    // for (string line = tokenLines[i].originalText; line != "SECTION TEXT"; line = tokenLines[i].originalText) {
+    for (i = 0; !(tokenLines[i].tokens[0] == "SECTION" && tokenLines[i].tokens[1] == "TEXT"); ++i) {
         string alias = tokenLines[i].tokens[0];
         string value = tokenLines[i].tokens[3];
         equTable.insert(make_pair(alias, value));
         tokenLines[i].ignore = true;
-        ++i;
+        // ++i;
     }
     // Replace all EQUs. Skip SECTION TEXT line.
     for (i = i + 1; i < tokenLines.size(); ++i) {
